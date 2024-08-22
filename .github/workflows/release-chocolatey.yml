@@ -1,0 +1,38 @@
+name: Update Chocolatey Package
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'  # Run every 12 hours
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  update-package:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up Chocolatey
+        run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+          iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+      - name: Install AU
+        run: choco install au -y
+
+      - name: Update package
+        id: update
+        run: |
+          cd $env:GITHUB_WORKSPACE
+          $version = ./update.ps1
+          echo "::set-output name=version::$version"
+        env:
+          api_key: ${{ secrets.CHOCO_API_KEY }}
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Update package to version ${{ steps.update.outputs.version }}" -a || echo "No changes to commit"
+          git push

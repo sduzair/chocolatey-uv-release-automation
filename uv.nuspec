@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>uv</id>
+    <version>0.0.0</version>
+    <title>uv</title>
+    <authors>Astral</authors>
+    <projectUrl>https://github.com/astral-sh/uv</projectUrl>
+    <licenseUrl>https://github.com/astral-sh/uv/blob/main/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>An extremely fast Python package installer and resolver, written in Rust.</description>
+    <tags>python package-manager installer resolver</tags>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
