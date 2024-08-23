@@ -27,7 +27,7 @@ jobs:
           $version = ./update.ps1
           echo "::set-output name=version::$version"
         env:
-          github_api_key: ${{ secrets.GITHUB_TOKEN }}
+          github_api_key: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
 
       - name: Commit changes
         run: |
