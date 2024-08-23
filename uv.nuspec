@@ -10,6 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>An extremely fast Python package installer and resolver, written in Rust.</description>
     <tags>python package-manager installer resolver</tags>
+    <iconUrl>https://astral.sh/static/apple-touch-icon.png</iconUrl>
   </metadata>
   <files>
     <file src="tools\**" target="tools" />
