@@ -23,7 +23,7 @@ jobs:
       - name: Update package
         id: update
         run: |
-          cd $env:GITHUB_WORKSPACE
+          $ErrorActionPreference = 'Stop'
           $version = ./update.ps1
           echo "::set-output name=version::$version"
           choco pack
