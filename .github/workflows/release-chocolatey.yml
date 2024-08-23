@@ -32,7 +32,7 @@ jobs:
           cd uv  # Change to the 'uv' directory
           $output = .\update.ps1 | Out-String  # Capture the output as a string
           Write-Output $output  # Display the output in the workflow logs
-          $version = $output -split "`n" | Select-Object -Last 1  # Get the last line (version number)
+          $version = $output -split "`n" | Select-Object -Last 2 | Select-Object -First 1  # Get the second-to-last line (version number)
           echo "version=$version" >> $env:GITHUB_OUTPUT  # Set the version output
         env:
           github_api_key: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
