@@ -23,7 +23,7 @@ jobs:
       - name: Update package
         id: update
         run: |
-          $ErrorActionPreference = 'Stop'
+          cd $env:GITHUB_WORKSPACE
           $version = .\update.ps1
           echo "::set-output name=version::$version"
           choco pack .\uv.nuspec
