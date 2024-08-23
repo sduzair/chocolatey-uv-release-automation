@@ -1,4 +1,4 @@
-import-module au
+import-Module chocolatey-au
 
 function global:au_GetLatest {
     $releases = 'https://api.github.com/repos/astral-sh/uv/releases/latest'

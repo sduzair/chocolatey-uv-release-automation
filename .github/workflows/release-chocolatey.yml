@@ -9,7 +9,10 @@ jobs:
   update-package:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository into 'uv' directory
+        uses: actions/checkout@v2
+        with:
+          path: uv  # Check out the repository into the 'uv' directory
 
       - name: Set up Chocolatey
         run: |
@@ -18,22 +21,23 @@ jobs:
           iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
       - name: Install AU
-        run: choco install au -y
+        run: choco install chocolatey-au -y
 
       - name: Update package
         id: update
         run: |
-          cd $env:GITHUB_WORKSPACE
-          $version = .\update.ps1
-          echo "::set-output name=version::$version"
-          choco pack .\uv.nuspec
-          choco push uv.$version.nupkg --source https://push.chocolatey.org/ --api-key $env:CHOCO_API_KEY
+          cd uv  # Change to the 'uv' directory
+          $output = .\update.ps1 | Out-String  # Capture the output as a string
+          Write-Output $output  # Display the output in the workflow logs
+          $version = $output -split "`n" | Select-Object -Last 1  # Get the last line (version number)
+          echo "version=$version" >> $env:GITHUB_OUTPUT  # Set the version output
         env:
           github_api_key: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
           CHOCO_API_KEY: ${{ secrets.CHOCO_API_KEY }}
 
       - name: Commit changes
         run: |
+          cd uv  # Change to the 'uv' directory
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
