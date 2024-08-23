@@ -24,9 +24,9 @@ jobs:
         id: update
         run: |
           $ErrorActionPreference = 'Stop'
-          $version = ./update.ps1
+          $version = .\update.ps1
           echo "::set-output name=version::$version"
-          choco pack
+          choco pack .\uv.nuspec
           choco push uv.$version.nupkg --source https://push.chocolatey.org/ --api-key $env:CHOCO_API_KEY
         env:
           github_api_key: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
