@@ -34,10 +34,16 @@ jobs:
           Write-Output $output  # Display the output in the workflow logs
           $version = ($output -split "`n")[-2].Trim()
           echo "version=$version" >> $env:GITHUB_OUTPUT  # Set the version output
+          if ($output -match "Updated\s*:\s*True") {
+            echo "new_version=true" >> $env:GITHUB_OUTPUT
+          } else {
+            echo "new_version=false" >> $env:GITHUB_OUTPUT
+          }
         env:
           github_api_key: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
 
       - name: Push package to Chocolatey
+        if: steps.update.outputs.new_version == 'true'
         run: |
           cd uv  # Change to the 'uv' directory
           choco push "uv.${{ steps.update.outputs.version }}.nupkg" --source https://push.chocolatey.org/ --api-key ${{ secrets.CHOCO_API_KEY }}
@@ -45,6 +51,7 @@ jobs:
           CHOCO_API_KEY: ${{ secrets.CHOCO_API_KEY }}
 
       - name: Commit changes
+        if: steps.update.outputs.new_version == 'true'
         run: |
           cd uv  # Change to the 'uv' directory
           git config --local user.email "action@github.com"
