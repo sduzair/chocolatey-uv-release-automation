@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>uv</id>
-    <version>0.6.11</version>
+    <version>0.6.12</version>
     <title>uv</title>
     <authors>Astral</authors>
     <projectUrl>https://github.com/astral-sh/uv</projectUrl>
