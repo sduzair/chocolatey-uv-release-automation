@@ -1,9 +1,9 @@
 ﻿$ErrorActionPreference = 'Stop'
 
 $packageName = 'uv'
-$url64 = 'https://github.com/astral-sh/uv/releases/download/0.7.19/uv-x86_64-pc-windows-msvc.zip'
+$url64 = 'https://github.com/astral-sh/uv/releases/download/0.7.20/uv-x86_64-pc-windows-msvc.zip'
 
-$checksum64 = '3098b38638b271d8b14b81247d6d69bb105807ec9fc5eb85f8cc8b6de5867c86'
+$checksum64 = 'ddf35e258c32971c00f3f4213cf1b5cf0847a42dac578738cb294d379e4a9f6c'
 
 $packageArgs = @{
   packageName   = $packageName
