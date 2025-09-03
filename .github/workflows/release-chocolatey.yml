@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   update-package:
-    runs-on: windows-latest
+    runs-on: Windows-2022
     steps:
       - name: Checkout repository into 'uv' directory
         uses: actions/checkout@v4
